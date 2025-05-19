@@ -28,3 +28,8 @@ func New(opts Options) *Service {
 		logger: opts.Logger,
 	}
 }
+
+func (s *Service) Sync() {
+	s.logger.Debug("Start sync in service layer")
+	//	TODO: implement me
+}

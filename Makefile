@@ -1,4 +1,4 @@
-.PHONY: install-deps lint
+.PHONY: install-deps lint infra-start infra-stop
 .SILENT:
 
 
@@ -15,4 +15,18 @@ install-deps:
 lint:
 	@$(CURDIR)/temp/bin/import-tidy --internal-prefix=git.uzinfocom.uz . --fix
 	@$(CURDIR)/temp/bin/golangci-lint run -c .golangci.yml --path-prefix . --fix
+
+
+
+# Infrastructure
+infra-start: infra-stop
+	@docker compose \
+		-f ./infrastructure/docker-compose.yaml \
+		--env-file configs/.env \
+		up --build -d;
+infra-stop:
+	@docker compose \
+		-f ./infrastructure/docker-compose.yaml \
+ 		--env-file configs/.env \
+		 down > /dev/null 2>&1 || true
 

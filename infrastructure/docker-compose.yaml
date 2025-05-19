@@ -1,0 +1,28 @@
+name: spotigram
+
+services:
+  # Postgres
+  spotigram_postgres:
+    image: postgres:15
+    container_name: spotigram_postgres
+    restart: "no"
+    networks:
+      - spotigram_network
+    ports:
+      - 5432:5432
+    volumes:
+      - ../temp/postgres_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "postgres"
+      POSTGRES_DB: "postgres"
+    healthcheck:
+      test: psql -U postgres -c "CREATE EXTENSION postgis"
+      interval: 5s
+      timeout: 30s
+      start_period: 0s
+      retries: 30
+
+networks:
+  spotigram_network:
+    driver: bridge

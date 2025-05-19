@@ -29,7 +29,7 @@ var Module = fx.Options(
 )
 
 func New(opts Options) (*tgbotapi.BotAPI, error) {
-	token := opts.Config.String(global.TELEGRAM_BOT_TOKEN)
+	token := opts.Config.String(global.ENV_TELEGRAM_BOT_TOKEN)
 	bot, err := tgbotapi.NewBotAPI(token)
 	if err != nil {
 		return nil, err
